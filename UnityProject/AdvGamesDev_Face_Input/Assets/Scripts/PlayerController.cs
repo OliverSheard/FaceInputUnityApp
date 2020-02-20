@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         baseRotation = transform.rotation;
+        
     }
     
 
@@ -31,3 +32,8 @@ public class PlayerController : MonoBehaviour
 
     }
 }
+
+//public partial class Form1 : Form
+//{
+//    static readonly CascadeClassifier casClass  new CascadeClassifier("haarcascade_frontalface_alt_tree.xml");
+//}
