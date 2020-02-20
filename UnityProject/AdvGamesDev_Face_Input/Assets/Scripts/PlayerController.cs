@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
 
         spaceRotation.transform.Rotate(-forward, -turning, 0, Space.World);
 
-        transform.rotation = Quaternion.Euler(baseRotation.eulerAngles + new Vector3(Mathf.Cos(Time.fixedTime * 5) * 3, Mathf.Sin(Time.fixedTime * 13) * 7, Mathf.Sin(Time.fixedTime * 19) * 4));
+        //Creates the wobble effect on the UFO
+        transform.rotation = Quaternion.Euler(baseRotation.eulerAngles + new Vector3(Mathf.Cos(Time.fixedTime * 5) * 3 + forward, Mathf.Sin(Time.fixedTime * 13) * 7, Mathf.Sin(Time.fixedTime * 19) * 4 + turning));
 
     }
 }

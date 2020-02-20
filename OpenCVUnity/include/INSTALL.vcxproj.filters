@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\olive\Documents\University\Final Year\Adv Games Dev\OpenCVTest\CMakeFiles\efd4c24238f264dbabf8a22ea8e772cd\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{AE9DC360-708F-315A-B652-F683BA5BD292}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
