@@ -44,10 +44,10 @@ MonoBehaviour:
     y: 30
     width: 1904
     height: 931
-  m_MinSize: {x: 683, y: 498}
-  m_MaxSize: {x: 14004, y: 14048}
+  m_MinSize: {x: 683, y: 348}
+  m_MaxSize: {x: 12008, y: 8048}
   vertical: 0
-  controlID: 34
+  controlID: 12
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -119,14 +119,14 @@ MonoBehaviour:
     y: 563
     width: 1518
     height: 368
-  m_MinSize: {x: 232, y: 274}
-  m_MaxSize: {x: 10002, y: 10024}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,10 +215,11 @@ MonoBehaviour:
     y: 0
     width: 1518
     height: 931
-  m_MinSize: {x: 406, y: 498}
-  m_MaxSize: {x: 10002, y: 14048}
+  m_MinSize: {x: 406, y: 348}
+  m_MaxSize: {x: 8006, y: 8048}
   vertical: 1
-  controlID: 35
+
+  controlID: 13
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -342,14 +343,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\olive\Documents\GitHub\FaceInputUnityApp\UnityProject\AdvGamesDev_Face_Input
+  m_LastProjectPath: H:\GitHub\FaceInputUnityApp\UnityProject\AdvGamesDev_Face_Input
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 1a260000
-    m_LastClickedID: 9754
-    m_ExpandedIDs: 000000001a260000d82700002429000026290000282900002a2900002c2900002e290000302900003229000034290000362900003829000000ca9a3b
+    m_SelectedIDs: 2c2e0000
+    m_LastClickedID: 11820
+    m_ExpandedIDs: 000000006c2600002c2800007429000076290000782900007a2900007c2900007e2900008029000082290000842900008629000088290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -377,7 +378,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001a260000d82700002429000026290000282900002a2900002c2900002e2900003029000032290000342900003629000038290000
+    m_ExpandedIDs: 000000006c2600002c2800007429000076290000782900007a2900007c2900007e2900008029000082290000842900008629000088290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -496,9 +497,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: cc280000
-      m_LastClickedID: 10444
-      m_ExpandedIDs: cafbffffcefbffffa2280000a6280000be280000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: d6fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: UFO_body
@@ -587,9 +588,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.24058592, y: 0.36445436, z: -0.09804929, w: 0.894247}
   m_Size:
-    m_Target: 85.932205
+    m_Target: 3.4424663
     speed: 2
-    m_Value: 85.932205
+    m_Value: 3.4424663
   m_Ortho:
     m_Target: 0
     speed: 2
