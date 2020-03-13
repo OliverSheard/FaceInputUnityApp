@@ -1,0 +1,15 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  FaceInput.cpp
+  MathLibrary.cpp
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.cpp(7): warning C4273: 'MathLibrary::Functions::Add': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.h(14): note: see previous definition of 'Add'
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.cpp(12): warning C4273: 'MathLibrary::Functions::Multiply': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.h(15): note: see previous definition of 'Multiply'
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.cpp(17): warning C4273: 'MathLibrary::Functions::AddMultiply': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\mathlibrary.h(16): note: see previous definition of 'AddMultiply'
+     Creating library D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.lib and object D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.exp
+  Generating code
+  All 4 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  FaceInput.vcxproj -> D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.dll
