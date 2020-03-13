@@ -1,5 +1,0 @@
-﻿  OpenCVFaceDetect.cpp
-h:\github\faceinputunityapp\visualstudio\opencvunity\opencvunity\opencvfacedetect.cpp(33): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-h:\github\faceinputunityapp\visualstudio\opencvunity\opencvunity\opencvfacedetect.cpp(34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  LINK : H:\GitHub\FaceInputUnityApp\VisualStudio\OpenCVUnity\x64\Debug\OpenCVUnity.dll not found or not built by the last incremental link; performing full link
-LINK : fatal error LNK1104: cannot open file 'opencv_core420d.lib'
