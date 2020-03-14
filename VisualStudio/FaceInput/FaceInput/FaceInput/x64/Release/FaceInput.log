@@ -1,8 +1,17 @@
 ﻿  stdafx.cpp
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.h(26): warning C4091: '__declspec(dllimport)': ignored on left of 'FaceDetectNameSpace::FaceDetectClass' when no variable is declared
   dllmain.cpp
+  FaceDetect.cpp
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.cpp(7): warning C4273: 'FaceDetectNameSpace::FaceDetectClass::FaceDetectClass': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.h(19): note: see previous definition of '{ctor}'
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.cpp(18): warning C4273: 'FaceDetectNameSpace::FaceDetectClass::DetectFace': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.h(20): note: see previous definition of 'DetectFace'
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.cpp(57): warning C4273: 'FaceDetectNameSpace::FaceDetectClass::GetFacePosition': inconsistent dll linkage
+  d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\facedetect.h(23): note: see previous definition of 'GetFacePosition'
   FaceInput.cpp
   VideoFaceDetector.cpp
+     Creating library D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.lib and object D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.exp
   Generating code
-  All 62 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 221 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   FaceInput.vcxproj -> D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.dll

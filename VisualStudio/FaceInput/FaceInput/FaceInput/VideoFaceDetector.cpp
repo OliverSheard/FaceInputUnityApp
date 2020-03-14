@@ -5,6 +5,12 @@
 
 const double VideoFaceDetector::TICK_FREQUENCY = cv::getTickFrequency();
 
+VideoFaceDetector::VideoFaceDetector()
+{
+	/*cv::VideoCapture camera(0);
+	VideoFaceDetector("haarcascade_frontalface_default.xml", camera);*/
+}
+
 VideoFaceDetector::VideoFaceDetector(const std::string cascadeFilePath, cv::VideoCapture &videoCapture)
 {
     setFaceCascade(cascadeFilePath);

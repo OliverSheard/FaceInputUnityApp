@@ -7,6 +7,7 @@
 class VideoFaceDetector
 {
 public:
+	VideoFaceDetector();
     VideoFaceDetector(const std::string cascadeFilePath, cv::VideoCapture &videoCapture);
     ~VideoFaceDetector();
 

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
-    [DllImport("FaceInput", EntryPoint = "?getTickFrequency@cv@@YANXZ")]
-    private static extern int main();
+{    
+    [DllImport("FaceInput")]
+    private static extern void FaceDetect();
 
     public static EventHandler<GameUpdate> scoreUpdateEvent;
     private int score;
@@ -20,7 +20,16 @@ public class GameManager : MonoBehaviour
         activeEnemies = new List<GameObject>();
         activeBases = new List<GameObject>();
         scoreUpdateEvent += ScoreUp;
-        main();
+        try
+        {
+            FaceDetect();
+        }
+        catch (DllNotFoundException e)
+        {
+            Debug.Log(e.TargetSite);
+            throw;
+        }
+        
     }
 
     private void ScoreUp(object sender, GameUpdate e)
