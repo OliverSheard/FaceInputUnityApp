@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [DllImport("FaceInput", EntryPoint = "?getTickFrequency@cv@@YANXZ")]
+    private static extern int main();
+
     public static EventHandler<GameUpdate> scoreUpdateEvent;
     private int score;
 
@@ -16,6 +20,7 @@ public class GameManager : MonoBehaviour
         activeEnemies = new List<GameObject>();
         activeBases = new List<GameObject>();
         scoreUpdateEvent += ScoreUp;
+        main();
     }
 
     private void ScoreUp(object sender, GameUpdate e)
