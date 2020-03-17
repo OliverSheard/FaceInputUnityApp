@@ -61,9 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\FaceTracker.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\OpenCVFaceDetection.cs" />
     <Compile Include="Assets\Scripts\Orbiter.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <None Include="Assets\mcs.rsp" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/olive/Documents/GitHub/FaceInputUnityApp/UnityProject/AdvGamesDev_Face_Input/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

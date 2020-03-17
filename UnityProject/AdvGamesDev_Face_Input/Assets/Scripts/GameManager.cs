@@ -5,24 +5,21 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{    
-    [DllImport("FaceInput")]
-    private static extern void FaceDetect();
-
+{
     public static EventHandler<GameUpdate> scoreUpdateEvent;
     private int score;
 
     private List<GameObject> activeEnemies, activeBases;
-
+    //[SerializeField] private OpenCVFaceDetection openCVImport;
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         activeEnemies = new List<GameObject>();
         activeBases = new List<GameObject>();
         scoreUpdateEvent += ScoreUp;
         try
         {
-            FaceDetect();
+            //FaceDetect();
         }
         catch (DllNotFoundException e)
         {
@@ -40,7 +37,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        //if(OpenCVFaceDetection.NormalizedFacePositions.Count == 0)
+        //{
+
+        //}
+        //else
+        //{
+        //    Debug.Log(OpenCVFaceDetection.NormalizedFacePositions[0]);
+        //}
     }
 
     public class GameUpdate : EventArgs
