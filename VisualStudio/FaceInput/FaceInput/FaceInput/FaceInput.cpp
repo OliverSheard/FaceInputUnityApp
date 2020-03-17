@@ -55,7 +55,7 @@ extern "C" int __declspec(dllexport) __stdcall Initialise(int& camIndex, int& ca
 	return 0;
 }
 
-extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle facePos, Circle* eyePos, int maxEyesDetected, int maxFaces, bool showFrame)
+extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle& facePos, Circle* eyePos, int maxEyesDetected, int maxFaces, bool showFrame)
 {
 	Mat frame;
 	_capture >> frame;

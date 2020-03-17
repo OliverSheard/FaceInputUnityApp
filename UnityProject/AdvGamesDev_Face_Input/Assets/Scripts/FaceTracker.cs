@@ -14,23 +14,31 @@ public class FaceTracker : MonoBehaviour
     private OpenCVCircle[] _eyes;
     private OpenCVCircle _faces;
     private bool active = false;
+    private int camWidth, camHeight;
     // Start is called before the first frame update
     void Start()
     {
-        int camIndex, camWidth, camHeight;
+        ZeroInput();
+        int camIndex;
 
         camIndex = camWidth = camHeight = 0;
 
-        int result = OpenCVFace.Initialise(ref camIndex,ref camWidth,ref camHeight);
+        int result = OpenCVFace.Initialise(ref camIndex, ref camWidth, ref camHeight);
 
-        Debug.Log(result);
+        Debug.Log(camWidth + ":" + camHeight);
 
         _eyes = new OpenCVCircle[_maxEyes];
 
         eyePositions = new Vector2[_maxEyes];
 
-        if(result == 0)
+        if (result == 0)
             active = true;
+    }
+
+    private static void ZeroInput()
+    {
+        facePosition = new Vector2(0, 0);
+        eyePositions = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0) };
     }
 
     private void OnApplicationQuit()
@@ -44,30 +52,30 @@ public class FaceTracker : MonoBehaviour
     {
         if(active)
         {
-            int result = 1;
-            unsafe
-            {
-                fixed(OpenCVCircle* eyesDetected = _eyes)
-                {
-                    result = OpenCVFace.DetectFace(_faces, eyesDetected, _maxEyes, _maxFaces, showCapture);
-                    Debug.Log(eyesDetected[0].X);
+            DetectFrontFaceAndEyes();
+        }
+    }
 
-                    
-                    //fixed (OpenCVCircle* faces = _faces)
-                    //{
-                        
-                    //}
-                    
-                }
+    private void DetectFrontFaceAndEyes()
+    {
+        int result = 1;
+        unsafe
+        {
+            fixed (OpenCVCircle* eyesDetected = _eyes)
+            {
+                result = OpenCVFace.DetectFace(ref _faces, eyesDetected, _maxEyes, _maxFaces, showCapture);
             }
+        }
 
-            if(result == 0)
-            {
-                Debug.Log("2: " + _faces.X + ":" + _faces.Y);
-                Debug.Log(_eyes[0].X);
-
-                facePosition = new Vector2(_faces.X, _faces.Y);
-            }                       
+        if (result == 0)
+        {
+            facePosition = new Vector2((float)_faces.X / camWidth,(float) _faces.Y / camHeight);
+            Debug.Log(facePosition.ToString());
+            eyePositions = _eyes.Select(s => new Vector2((float)s.X / camWidth, (float)s.Y / camHeight)).ToArray();
+        }
+        else
+        {
+            ZeroInput();
         }
     }
 }
@@ -77,7 +85,7 @@ internal static class OpenCVFace
     internal static extern int Initialise(ref int camIndex, ref int camWidth, ref int camHeight);
 
     [DllImport("FaceInput")]
-    internal unsafe static extern int DetectFace(OpenCVCircle facePos, OpenCVCircle* eyes, int maxEyes, int maxFaces, bool showCap);
+    internal unsafe static extern int DetectFace(ref OpenCVCircle facePos, OpenCVCircle* eyes, int maxEyes, int maxFaces, bool showCap);
 
     [DllImport("FaceInput")]
     internal static extern void Release();

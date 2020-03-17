@@ -10,23 +10,12 @@ public class GameManager : MonoBehaviour
     private int score;
 
     private List<GameObject> activeEnemies, activeBases;
-    //[SerializeField] private OpenCVFaceDetection openCVImport;
     // Start is called before the first frame update
     void Start()
     {        
         activeEnemies = new List<GameObject>();
         activeBases = new List<GameObject>();
-        scoreUpdateEvent += ScoreUp;
-        try
-        {
-            //FaceDetect();
-        }
-        catch (DllNotFoundException e)
-        {
-            Debug.Log(e.TargetSite);
-            throw;
-        }
-        
+        scoreUpdateEvent += ScoreUp;        
     }
 
     private void ScoreUp(object sender, GameUpdate e)
@@ -37,15 +26,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //if(OpenCVFaceDetection.NormalizedFacePositions.Count == 0)
-        //{
-
-        //}
-        //else
-        //{
-        //    Debug.Log(OpenCVFaceDetection.NormalizedFacePositions[0]);
-        //}
     }
 
     public class GameUpdate : EventArgs

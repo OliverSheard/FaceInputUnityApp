@@ -26,8 +26,22 @@ public class PlayerController : MonoBehaviour
     private void Move(bool attacking)
     {
         playerSpeed = attacking ? attackSpeed : moveSpeed;
-        var forward = Input.GetAxis("Vertical") * playerSpeed.x * Time.deltaTime;
-        var turning = Input.GetAxis("Horizontal") * playerSpeed.y * Time.deltaTime;
+        float forward, turning;
+
+        turning = -(FaceTracker.facePosition.x - 0.5f) * 10;
+        forward = -(FaceTracker.facePosition.y - 0.5f) * 10;
+        //if(Mathf.Abs(FaceTracker.facePosition.x - 0.5f) <= 0.0f)
+        //    turning = (FaceTracker.facePosition.x - 0.5f) * 2;
+        //else    
+        //    turning = Input.GetAxis("Horizontal");
+
+        //if (Mathf.Abs(FaceTracker.facePosition.y - 0.5f) <= 0.0f)
+        //    forward = (FaceTracker.facePosition.y - 0.5f) * 2;
+        //else
+        //    forward = Input.GetAxis("Vertical");
+
+        forward *= playerSpeed.x * Time.deltaTime;
+        turning *= playerSpeed.y * Time.deltaTime;
 
         spaceRotation.transform.Rotate(-forward, -turning, 0, Space.World);
 

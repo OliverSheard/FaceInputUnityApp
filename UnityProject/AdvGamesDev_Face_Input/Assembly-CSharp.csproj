@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FaceTracker.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\OpenCVFaceDetection.cs" />
     <Compile Include="Assets\Scripts\Orbiter.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <None Include="Assets\mcs.rsp" />
