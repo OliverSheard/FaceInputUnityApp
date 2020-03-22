@@ -6,13 +6,12 @@ using System.Linq;
 
 public class FaceTracker : MonoBehaviour
 {
-    public static Vector2 facePosition;
+    public static Vector2 facePosition, nosePosition, input;
     public static Vector2[] eyePositions;
     [Range(0,10)][SerializeField] private int _maxEyes;
-    int _maxFaces = 1;
     [SerializeField] private bool showCapture = false;
     private OpenCVCircle[] _eyes;
-    private OpenCVCircle _faces;
+    private OpenCVCircle _faces, _nose;
     private bool active = false;
     private int camWidth, camHeight;
     // Start is called before the first frame update
@@ -37,7 +36,7 @@ public class FaceTracker : MonoBehaviour
 
     private static void ZeroInput()
     {
-        facePosition = new Vector2(0, 0);
+        facePosition = nosePosition = input = new Vector2(0, 0);
         eyePositions = new Vector2[] { new Vector2(0, 0), new Vector2(0, 0) };
     }
 
@@ -47,7 +46,6 @@ public class FaceTracker : MonoBehaviour
             OpenCVFace.Release();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(active)
@@ -63,15 +61,21 @@ public class FaceTracker : MonoBehaviour
         {
             fixed (OpenCVCircle* eyesDetected = _eyes)
             {
-                result = OpenCVFace.DetectFace(ref _faces, eyesDetected, _maxEyes, _maxFaces, showCapture);
+                result = OpenCVFace.DetectFace(ref _faces, eyesDetected, ref _nose, _maxEyes, showCapture);
             }
         }
 
+        //Can switch case the output, eg -1 means no face detected etc. then can zero the player input or potentially pause if face is not detected
         if (result == 0)
         {
-            facePosition = new Vector2((float)_faces.X / camWidth,(float) _faces.Y / camHeight);
-            Debug.Log(facePosition.ToString());
+            facePosition = new Vector2(_faces.X, _faces.Y);            
             eyePositions = _eyes.Select(s => new Vector2((float)s.X / camWidth, (float)s.Y / camHeight)).ToArray();
+            nosePosition = new Vector2(_nose.X, _nose.Y);
+
+            input = facePosition - nosePosition;
+
+            Debug.Log("Delta X = " + input.x + ": Delta Y = " + input.y);
+
         }
         else
         {
@@ -85,7 +89,7 @@ internal static class OpenCVFace
     internal static extern int Initialise(ref int camIndex, ref int camWidth, ref int camHeight);
 
     [DllImport("FaceInput")]
-    internal unsafe static extern int DetectFace(ref OpenCVCircle facePos, OpenCVCircle* eyes, int maxEyes, int maxFaces, bool showCap);
+    internal unsafe static extern int DetectFace(ref OpenCVCircle facePos, OpenCVCircle* eyes,ref OpenCVCircle nose, int maxEyes, bool showCap);
 
     [DllImport("FaceInput")]
     internal static extern void Release();
@@ -95,11 +99,4 @@ internal static class OpenCVFace
 public struct OpenCVCircle
 {
     public int X, Y, Radius;
-}
-
-[StructLayout(LayoutKind.Sequential, Size = 36)]
-public struct Face
-{
-    OpenCVCircle facePosition;
-    OpenCVCircle[] eyePositions;
 }

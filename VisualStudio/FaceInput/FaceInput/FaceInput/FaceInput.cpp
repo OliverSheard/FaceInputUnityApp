@@ -1,19 +1,5 @@
 #include "stdafx.h"
 
-//#include <opencv2\highgui\highgui.hpp>
-//#include <opencv2\imgproc\imgproc.hpp>
-//#include "VideoFaceDetector.h"
-//#include "FaceDetect.h"
-//
-//namespace FaceInput
-//{
-//	VideoFaceDetector GetFaceDetector()
-//	{
-//		FaceDetect faceDetection;
-//		return faceDetection.detector;		
-//	}
-//}
-
 using namespace std;
 using namespace cv;
 
@@ -27,6 +13,7 @@ struct Circle
 //void detectAndDisplay(Mat frame);
 CascadeClassifier face_cascade;
 CascadeClassifier eyes_cascade;
+CascadeClassifier nose_cascade;
 VideoCapture _capture;
 String _windowName = "Capture - Face detection";
 
@@ -41,12 +28,17 @@ extern "C" int __declspec(dllexport) __stdcall Initialise(int& camIndex, int& ca
 	{
 		return -2;
 	};
+	if (!nose_cascade.load("haarcascade_mcs_nose.xml"))
+	{
+		return -3;
+	}
+
 	int camera_device = camIndex = 0;	
 	//-- 2. Read the video stream
 	_capture.open(camera_device);
 	if (!_capture.isOpened())
 	{
-		return -3;
+		return -4;
 	}
 
 	camWidth = _capture.get(CAP_PROP_FRAME_WIDTH);
@@ -55,8 +47,9 @@ extern "C" int __declspec(dllexport) __stdcall Initialise(int& camIndex, int& ca
 	return 0;
 }
 
-extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle& facePos, Circle* eyePos, int maxEyesDetected, int maxFaces, bool showFrame)
+extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle& facePos, Circle* eyePos, Circle& nosePos, int maxEyesDetected, bool showFrame)
 {
+	//Detect the largest face visible via the haar cascade
 	Mat frame;
 	_capture >> frame;
 	if (frame.empty())
@@ -68,45 +61,82 @@ extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle& facePos, Circl
 	std::vector<Rect> faces;
 	face_cascade.detectMultiScale(frame_gray, faces);
 
+	if (faces.size() == 0)
+	{
+		//No face found
+		return -1;
+	}
+
+	int biggestFace = 0;
+	int selectedFaceIndex = 0;
+
 	for (size_t i = 0; i < faces.size(); i++)
 	{
 		Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
 
-		facePos = Circle(center.x, center.y, faces[i].width + faces[i].height / 2);
+		int faceSize = faces[i].width + faces[i].height / 2;
 
-		ellipse(frame, center, Size(faces[i].width / 2, faces[i].height / 2), 0, 0, 360, Scalar(255, 0, 255), 4);
-		Mat faceROI = frame_gray(faces[i]);
-		//-- In first face found, detect eyes
-		std::vector<Rect> eyes;
-		eyes_cascade.detectMultiScale(faceROI, eyes);
-		for (size_t j = 0; j < eyes.size(); j++) //Was size_t instead of int
+		if (faceSize > biggestFace)
 		{
-			Point eye_center(faces[i].x + eyes[j].x + eyes[j].width / 2, faces[i].y + eyes[j].y + eyes[j].height / 2);
-			int radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
+			facePos = Circle(center.x, center.y, faceSize);
+			biggestFace = faceSize;
+			selectedFaceIndex = (int)i;
+		}				
+	}	
 
-			eyePos[j] = Circle(faces[i].x + eyes[j].x, faces[i].y + eyes[j].y, radius);
+	//Draw on the frame where the largest face is positioned
+	ellipse(frame, Point(facePos.X, facePos.Y), Size(faces[selectedFaceIndex].width / 2, faces[selectedFaceIndex].height / 2), 0, 0, 360, Scalar(255, 255, 255), 4);
 
-			circle(frame, eye_center, radius, Scalar(255, 0, 0), 4);
+	//Detect the eyes within the bounds of the largest face detected
+	Mat faceROI = frame_gray(faces[selectedFaceIndex]);
+	std::vector<Rect> eyes;
+	eyes_cascade.detectMultiScale(faceROI, eyes);
 
-			if ((int)j == maxEyesDetected)
-			{
-				break;
-			}
-		}
+	for (size_t j = 0; j < eyes.size(); j++)
+	{
+		Point eye_center(faces[selectedFaceIndex].x + eyes[j].x + eyes[j].width / 2, faces[selectedFaceIndex].y + eyes[j].y + eyes[j].height / 2);
+		int radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
 
-		if (i == maxFaces)
+		eyePos[j] = Circle(faces[selectedFaceIndex].x + eyes[j].x, faces[selectedFaceIndex].y + eyes[j].y, radius);
+
+		circle(frame, eye_center, radius, Scalar(0, 0, 0), 4);
+
+		if ((int)j == maxEyesDetected)
 		{
 			break;
 		}
 	}
 
-	if (faces.size() == 0)
-	{
-		return -1;
+	//Detect the nose within the bounds of the largest face detected
+	std::vector<Rect> nose;
+	nose_cascade.detectMultiScale(faceROI, nose);
+
+	int biggestNose = 0;
+	int biggestNoseIndex = -1;
+	nosePos = Circle(faces[selectedFaceIndex].x, faces[selectedFaceIndex].y, 0);
+
+	for (size_t i = 0; i < nose.size(); i++)
+	{		
+		int radius = cvRound((nose[i].width + nose[i].height) * 0.25);
+
+		if (radius > biggestNose)
+		{
+			biggestNose = radius;
+			nosePos = Circle(faces[selectedFaceIndex].x + nose[i].x, faces[selectedFaceIndex].y + nose[i].y, radius);
+			biggestNoseIndex = i;
+			Point nose_Center(faces[selectedFaceIndex].x + nose[biggestNoseIndex].x + nose[biggestNoseIndex].width / 2, faces[selectedFaceIndex].y + nose[biggestNoseIndex].y + nose[biggestNoseIndex].height / 2);
+			circle(frame, nose_Center, cvRound((nose[biggestNoseIndex].width + nose[biggestNoseIndex].height) * 0.25), Scalar(0, 255, 0), 4);
+		}
 	}
 	
-	if (showFrame) {
+	/*if (biggestNoseIndex >= 0)
+	{
+		
+	}*/
 
+	//Possibly remove at later date
+	if (showFrame)
+	{
 		// Display debug output.
 		imshow(_windowName, frame);
 	}
@@ -115,57 +145,10 @@ extern "C" int __declspec(dllexport) __stdcall DetectFace(Circle& facePos, Circl
 		destroyWindow(_windowName);
 	}
 
-
-
 	return 0;
 }
 
 extern "C" void __declspec(dllexport) __stdcall Release()
-{
+{	
 	_capture.release();
 }
-
-//int main(int argc, const char** argv)
-//{	
-//	Mat frame;
-//	while (_capture.read(frame))
-//	{
-//		if (frame.empty())
-//		{
-//			break;
-//		}
-//		//-- 3. Apply the classifier to the frame
-//		detectAndDisplay(frame);
-//		if (waitKey(10) == 27)
-//		{
-//			break; // escape
-//		}
-//	}
-//	return 0;
-//}
-//void detectAndDisplay(Mat frame)
-//{
-//	Mat frame_gray;
-//	cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
-//	equalizeHist(frame_gray, frame_gray);
-//	//-- Detect faces
-//	std::vector<Rect> faces;
-//	face_cascade.detectMultiScale(frame_gray, faces);
-//	for (size_t i = 0; i < faces.size(); i++)
-//	{
-//		Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
-//		ellipse(frame, center, Size(faces[i].width / 2, faces[i].height / 2), 0, 0, 360, Scalar(255, 0, 255), 4);
-//		Mat faceROI = frame_gray(faces[i]);
-//		//-- In each face, detect eyes
-//		std::vector<Rect> eyes;
-//		eyes_cascade.detectMultiScale(faceROI, eyes);
-//		for (size_t j = 0; j < eyes.size(); j++)
-//		{
-//			Point eye_center(faces[i].x + eyes[j].x + eyes[j].width / 2, faces[i].y + eyes[j].y + eyes[j].height / 2);
-//			int radius = cvRound((eyes[j].width + eyes[j].height)*0.25);
-//			circle(frame, eye_center, radius, Scalar(255, 0, 0), 4);
-//		}
-//	}
-//	//-- Show what you got
-//	imshow("Capture - Face detection", frame);
-//}
