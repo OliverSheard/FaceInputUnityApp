@@ -28,8 +28,9 @@ public class PlayerController : MonoBehaviour
         playerSpeed = attacking ? attackSpeed : moveSpeed;
         float forward, turning;
 
-        turning = (FaceTracker.input.x);
-        forward = (FaceTracker.input.y);
+        turning = 0f;//(FaceTracker.input.x);
+        forward = 0f;//(FaceTracker.input.y);
+
         //if(Mathf.Abs(FaceTracker.facePosition.x - 0.5f) <= 0.0f)
         //    turning = (FaceTracker.facePosition.x - 0.5f) * 2;
         //else    

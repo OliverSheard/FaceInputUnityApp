@@ -1,13 +1,13 @@
 ﻿  stdafx.cpp
   dllmain.cpp
-  FaceDetect.cpp
   FaceInput.cpp
-d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(44): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(45): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(126): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(47): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(65): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\olive\documents\github\faceinputunityapp\visualstudio\faceinput\faceinput\faceinput\faceinput.cpp(176): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   VideoFaceDetector.cpp
      Creating library D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.lib and object D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.exp
   Generating code
-  All 126 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 130 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   FaceInput.vcxproj -> D:\olive\Documents\GitHub\FaceInputUnityApp\VisualStudio\FaceInput\FaceInput\x64\Release\FaceInput.dll

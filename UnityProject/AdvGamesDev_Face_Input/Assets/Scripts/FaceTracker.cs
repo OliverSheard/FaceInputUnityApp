@@ -12,8 +12,8 @@ public class FaceTracker : MonoBehaviour
     [SerializeField] private bool showCapture = false;
     private OpenCVCircle[] _eyes;
     private OpenCVCircle _faces, _nose;
-    private bool active = false;
-    private int camWidth, camHeight;
+    public bool active = false;
+    private int camWidth, camHeight, minFaceSize = 200;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +61,13 @@ public class FaceTracker : MonoBehaviour
         {
             fixed (OpenCVCircle* eyesDetected = _eyes)
             {
-                result = OpenCVFace.DetectFace(ref _faces, eyesDetected, ref _nose, _maxEyes, showCapture);
+                //Run the openCV C++ code, returning the face position, eye positions and nose position
+                result = OpenCVFace.DetectFace(ref _faces, minFaceSize, eyesDetected, _maxEyes, ref _nose, showCapture);
+                //if (result == 0)
+                //{
+                //    OpenCVFace.DetectEyes(eyesDetected, _maxEyes);
+                //    OpenCVFace.DetectNose(ref _nose);
+                //}
             }
         }
 
@@ -73,7 +79,8 @@ public class FaceTracker : MonoBehaviour
             nosePosition = new Vector2(_nose.X, _nose.Y);
 
             input = facePosition - nosePosition;
-
+            Debug.Log("Face X = " + facePosition.x + ": Face Y = " + facePosition.y);
+            Debug.Log("Nose X = " + nosePosition.x + ": Nose Y = " + nosePosition.y);
             Debug.Log("Delta X = " + input.x + ": Delta Y = " + input.y);
 
         }
@@ -89,7 +96,13 @@ internal static class OpenCVFace
     internal static extern int Initialise(ref int camIndex, ref int camWidth, ref int camHeight);
 
     [DllImport("FaceInput")]
-    internal unsafe static extern int DetectFace(ref OpenCVCircle facePos, OpenCVCircle* eyes,ref OpenCVCircle nose, int maxEyes, bool showCap);
+    internal unsafe static extern int DetectFace(ref OpenCVCircle facePos, int minFaceSize, OpenCVCircle* eyePositions, int maxEyes, ref OpenCVCircle nosePosition, bool showCap);
+
+    //[DllImport("FaceInput")]
+    //internal unsafe static extern int DetectEyes(OpenCVCircle* facePos, int maxEyes);
+
+    //[DllImport("FaceInput")]
+    //internal unsafe static extern int DetectNose(ref OpenCVCircle nosePos);
 
     [DllImport("FaceInput")]
     internal static extern void Release();

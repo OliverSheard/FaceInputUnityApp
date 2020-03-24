@@ -912,7 +912,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxEyes: 2
-  showCapture: 0
+  showCapture: 1
+  active: 0
 --- !u!1 &944035245
 GameObject:
   m_ObjectHideFlags: 0
